@@ -77,9 +77,12 @@ func fileListHandler(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
+	fmt.Fprintln(w, "<html><body>")
 	for _, file := range markdownFiles {
-		fmt.Fprintln(w, file)
+		link := fmt.Sprintf("https://raw.githubusercontent.com/%s/%s/%s/%s", owner, repo, branch, file)
+		fmt.Fprintf(w, "<a href=\"%s\" target=\"_blank\">%s</a><br>", link, file)
 	}
+	fmt.Fprintln(w, "</body></html>")
 
 	log.Println("Запрос успешно обработан")
 }
